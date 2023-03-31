@@ -1,0 +1,50 @@
+{
+  "heroes": [
+    {
+      "id": 1,
+      "name": "Первый герой",
+      "description": "Первый герой в рейтинге!",
+      "element": "Fire"
+    },
+    {
+      "id": 2,
+      "name": "Неизвестный герой",
+      "description": "Скрывающийся в тени",
+      "element": "Wind"
+    },
+    {
+      "id": 3,
+      "name": "Морской герой",
+      "description": "Как аквамен, но не из DC",
+      "element": "Water"
+    },
+    {
+      "id": "ff89363f-d054-4ba8-acff-44082d02960d",
+      "name": "Volodymyr Kytsyi",
+      "description": "Run to gym",
+      "element": "Fire"
+    }
+  ],
+  "filters": [
+    {
+      "element": "All",
+      "style": "-outline-dark"
+    },
+    {
+      "element": "Fire",
+      "style": "-danger"
+    },
+    {
+      "element": "Water",
+      "style": "-primary"
+    },
+    {
+      "element": "Wind",
+      "style": "-success"
+    },
+    {
+      "element": "Earth",
+      "style": "-secondary"
+    }
+  ]
+}
