@@ -36,10 +36,10 @@ export const setFilters = (filters) => {
         payload: filters
     }
 }
-export const addActiveFilter = (filter) => {
+export const addActiveFilter = (filters) => {
     return {
         type: 'ADD_ACTIVE_FILTER',
-        payload: filter
+        payload: filters
     }
 }
 

@@ -11,3 +11,10 @@
 ul {
     padding: 0;
 }
+
+.btn {
+    &:focus {
+        box-shadow: none;
+    }
+    
+}

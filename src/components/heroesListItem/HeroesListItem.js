@@ -26,10 +26,10 @@ const HeroesListItem = ({name, description, element, deleteHero}) => {
     return (
         <li 
             className={`card flex-row mb-4 shadow-lg text-white ${elementClassName}`}>
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUOFXdKlVRzZKTy84XrLk30VnMHZUPICld52725PaFh_9UG-BuB9wEhMEKCwzQq14qZts&usqp=CAU" 
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3BL0b0jjI1tLEjt2U4OBqi7mJdhmYD7YdyA&usqp=CAU" 
                  className="img-fluid w-25 d-inline" 
                  alt="unknown hero" 
-                 style={{'objectFit': 'cover'}}/>
+                 style={{'objectFit': 'cover', 'height': '150px'}}/>
             <div className="card-body">
                 
                 <h3 className="card-title">{name}</h3>

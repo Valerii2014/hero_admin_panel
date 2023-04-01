@@ -19,16 +19,16 @@
       "element": "Water"
     },
     {
-      "id": "ff89363f-d054-4ba8-acff-44082d02960d",
-      "name": "Volodymyr Kytsyi",
-      "description": "Run to gym",
-      "element": "Fire"
+      "id": "90f5c841-07f6-4043-b9cd-5cab064f3387",
+      "name": "Fucked Hero",
+      "description": "Fucked your mom",
+      "element": "Earth"
     }
   ],
   "filters": [
     {
       "element": "All",
-      "style": "-outline-dark"
+      "style": "-dark"
     },
     {
       "element": "Fire",

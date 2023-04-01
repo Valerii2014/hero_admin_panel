@@ -1,13 +1,6 @@
 
-// Задача для этого компонента:
-// Фильтры должны формироваться на основании загруженных данных
-// Фильтры должны отображать только нужных героев при выборе
-// Активный фильтр имеет класс active
-// Изменять json-файл для удобства МОЖНО!
-// Представьте, что вы попросили бэкенд-разработчика об этом
-
-import { useHttp } from "../../hooks/http.hook";
 import { useEffect } from 'react';
+import { useHttp } from "../../hooks/http.hook";
 import { useSelector, useDispatch } from "react-redux";
 import { setFilters, addActiveFilter, deleteActiveFilter} from "../../actions";
 
@@ -24,24 +17,35 @@ const HeroesFilters = () => {
     }
     
     useEffect(getFilters, []);
+
+    const checkActiveFilters = (choisedFilter) => {
+        if(choisedFilter !== 'All'){
+            return activeFilters.some(filter => filter === choisedFilter) ?
+            [...activeFilters] :
+            [...activeFilters, choisedFilter];
+        } else {
+            return filters.map(({element}) => element);
+        }
+    }
     
     const changeActiveFilter = (element) => {
-        console.log()
         if(activeFilters.some(filter => filter === element)){
             dispatch(deleteActiveFilter('All'))
             dispatch(deleteActiveFilter(element))
         } else {
-            dispatch(addActiveFilter(element))
+            const filters = checkActiveFilters(element);
+            dispatch(addActiveFilter(filters))
         }
     }
 
     const filterButtons = (filters) => {
         return filters.map(({element, style}, i) => {
-            const classActive = activeFilters.some(filter => filter === element) ? 'active' : null;
+            const classActive = !activeFilters.some(filter => filter === element) ? '-outline' : '';
             return ( 
                     <button 
-                        key={i} 
-                        className={`btn btn${style} ${classActive}`}
+                        key={i}
+                        disabled={activeFilters.length === 5 && element === 'All'} 
+                        className={`btn btn${classActive}${style}`}
                         onClick={() => changeActiveFilter(element)}>
                         {element}
                     </button>

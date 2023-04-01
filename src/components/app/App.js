@@ -9,7 +9,7 @@ const App = () => {
     return (
         <main className="app">
             <div className="content">
-                {/* <HeroesList/> */}
+                <HeroesList/>
                 <div className="content__interactive">
                     <HeroesAddForm/>
                     <HeroesFilters/>

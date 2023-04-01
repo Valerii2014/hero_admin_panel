@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
-import { createSelector } from 'reselect';
+import { createSelector } from '@reduxjs/toolkit'
 import { useDispatch, useSelector } from 'react-redux';
+import { CSSTransition } from 'react-transition-group';
 import { heroesFetching, heroesFetched, heroesFetchingError, deleteHero } from '../../actions';
 
 import {useHttp} from '../../hooks/http.hook';
@@ -15,9 +16,7 @@ const HeroesList = () => {
         state => state.heroes.heroes,
         state => state.filters.activeFilters,
         (heroes, activeFilters) => {
-            return heroes.filter(({element}) => {
-                return element => activeFilters.some(filter => filter === element)
-            }) 
+            return heroes.filter(({element}) => activeFilters.some(filter => filter === element))
         }
     )
     
@@ -67,3 +66,4 @@ const HeroesList = () => {
 }
 
 export default HeroesList;
+
