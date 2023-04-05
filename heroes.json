@@ -4,45 +4,50 @@
       "id": 1,
       "name": "Первый герой",
       "description": "Первый герой в рейтинге!",
-      "element": "Fire"
+      "element": "Earth"
     },
     {
       "id": 2,
-      "name": "Неизвестный герой",
-      "description": "Скрывающийся в тени",
+      "name": "Первый герой",
+      "description": "Первый герой в рейтинге!",
       "element": "Wind"
     },
     {
-      "id": 3,
-      "name": "Морской герой",
-      "description": "Как аквамен, но не из DC",
-      "element": "Water"
+      "id": "b81af8e0-5295-4b71-a50e-09c6f7397864",
+      "name": "Volodymyr Kytsyi",
+      "description": "ewffds",
+      "element": "Fire"
     },
     {
-      "id": "90f5c841-07f6-4043-b9cd-5cab064f3387",
-      "name": "Fucked Hero",
-      "description": "Fucked your mom",
-      "element": "Earth"
+      "id": "38a02176-42d0-4fa3-919e-ed604e2c2d96",
+      "name": "Valerii Fatchenko",
+      "description": "Run to gum and smocking electronic sigaret",
+      "element": "Water"
     }
   ],
   "filters": [
     {
+      "id": "509263ae-a40f-4ac6-a559-1f7802f8387b",
       "element": "All",
       "style": "-dark"
     },
     {
+      "id": "87e318db-057b-42d4-9864-f00abb6ca680",
       "element": "Fire",
       "style": "-danger"
     },
     {
+      "id": "c29bdc9e-d45d-4a73-b813-d2d41eeb4059",
       "element": "Water",
       "style": "-primary"
     },
     {
+      "id": "890f6b96-7d09-4176-a6c1-9f35c89e07ad",
       "element": "Wind",
       "style": "-success"
     },
     {
+      "id": "905cef28-dd91-4a8c-bf00-2bdb2ebbae10",
       "element": "Earth",
       "style": "-secondary"
     }

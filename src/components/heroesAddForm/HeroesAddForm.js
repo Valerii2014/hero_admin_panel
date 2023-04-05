@@ -1,29 +1,16 @@
 
-
-
-import { useEffect, useState } from "react";
 import { Formik } from "formik";
 import { v4 as uuidv4 } from 'uuid';
 import { useHttp } from "../../hooks/http.hook";
-import { useDispatch } from "react-redux";
-import { addHero } from "../../actions";
+import { useDispatch, useSelector } from "react-redux";
+import { addHero } from "../heroesList/heroesSlice";
+
 
 const HeroesAddForm = () => {
 
+    const filters = useSelector(state => state.filters.filters);
     const dispatch = useDispatch();
-
     const {request} = useHttp();
-
-    const [filters, setFilters] = useState([]);
-    
-    
-    const getFilters = () => {
-        request('http://localhost:3001/filters')
-        .then(data => setFilters(data))
-        .catch(err => console.log(err))
-    }
-    
-    useEffect(getFilters, []);
 
     const postHero = (hero) => {
         request(`http://localhost:3001/heroes`, 'POST', JSON.stringify(hero))
@@ -41,7 +28,7 @@ const HeroesAddForm = () => {
         }
         postHero(hero);
     }
-   
+
     return (
         <Formik
             initialValues={{   
@@ -100,7 +87,9 @@ const HeroesAddForm = () => {
                             value={values.name}
                             onChange={handleChange}
                             onBlur={handleBlur}/>
-                        {errors.name && touched.name && errors.name}
+                        <span className="validation-error">
+                            {errors.name && touched.name && errors.name}
+                        </span>
                     </div>
 
                     <div className="mb-3">
@@ -114,7 +103,9 @@ const HeroesAddForm = () => {
                             value={values.text} 
                             onChange={handleChange}
                             onBlur={handleBlur}/>
-                        {errors.text && touched.text && errors.text}
+                         <span className="validation-error">
+                            {errors.text && touched.text && errors.text}
+                         </span>
                     </div>
 
                     <div className="mb-3">
@@ -127,9 +118,11 @@ const HeroesAddForm = () => {
                             onBlur={handleBlur}
                             value={values.element}>
                             <option >Я владею элементом...</option>
-                            {createOption(filters)}
+                            {createOptions(filters)}
                         </select>
-                        {errors.element && touched.element && errors.element}
+                        <span className="validation-error">
+                            {errors.element && touched.element && errors.element}
+                        </span>
                     </div>
 
                     <button 
@@ -145,10 +138,10 @@ const HeroesAddForm = () => {
     )
 }
 
-const createOption = (filters) => {
+const createOptions = (filters) => {
     return filters.map(({element}, i ) => {
         if(element === 'All') return;
-        return ( <option key={i} value={element}>{element}</option> )
+        return  <option key={i} value={element}>{element}</option>
     })
 }
 

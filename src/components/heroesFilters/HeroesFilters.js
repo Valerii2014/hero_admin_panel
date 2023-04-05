@@ -1,59 +1,50 @@
 
 import { useEffect } from 'react';
-import { useHttp } from "../../hooks/http.hook";
 import { useSelector, useDispatch } from "react-redux";
-import { setFilters, addActiveFilter, deleteActiveFilter} from "../../actions";
+import { changeActiveFilter, fetchFilters, selectAll } from './filtersSlice';
+
+
+import Spinner from '../spinner/Spinner';
+
 
 const HeroesFilters = () => {
 
-    const {request} = useHttp();
-    const {filters, activeFilters} = useSelector(state => state.filters);
+    const {filters, filtersLoadingStatus, allFiltersId} = useSelector(state => state.filters);
+    const activeFilters = useSelector(selectAll);
     const dispatch = useDispatch();
 
-    const getFilters = () => {
-        request('http://localhost:3001/filters')
-            .then(data => dispatch(setFilters(data)))
-            .catch(err => console.log(err))
-    }
     
-    useEffect(getFilters, []);
-
-    const checkActiveFilters = (choisedFilter) => {
-        if(choisedFilter !== 'All'){
-            return activeFilters.some(filter => filter === choisedFilter) ?
-            [...activeFilters] :
-            [...activeFilters, choisedFilter];
-        } else {
-            return filters.map(({element}) => element);
-        }
-    }
-    
-    const changeActiveFilter = (element) => {
-        if(activeFilters.some(filter => filter === element)){
-            dispatch(deleteActiveFilter('All'))
-            dispatch(deleteActiveFilter(element))
-        } else {
-            const filters = checkActiveFilters(element);
-            dispatch(addActiveFilter(filters))
-        }
-    }
+    useEffect(() => {
+        dispatch(fetchFilters())
+    }, []);
 
     const filterButtons = (filters) => {
-        return filters.map(({element, style}, i) => {
-            const classActive = !activeFilters.some(filter => filter === element) ? '-outline' : '';
+        return filters.map(filter => {
+            const checkActive = !activeFilters.some(activeFilter => activeFilter.id === filter.id);
+
+            const btnClass = checkActive ? '-outline' : '';
+            const action = () => dispatch(changeActiveFilter(checkActive ? 
+                                                                filter : 
+                                                                    filter.id))
+
             return ( 
                     <button 
-                        key={i}
-                        disabled={activeFilters.length === 5 && element === 'All'} 
-                        className={`btn btn${classActive}${style}`}
-                        onClick={() => changeActiveFilter(element)}>
-                        {element}
+                        key={filter.id}
+                        disabled={
+                            activeFilters.length === filters.length && 
+                            filter.id === allFiltersId
+                        } 
+                        className={`btn btn${btnClass}${filter.style}`}
+                        onClick={action}>
+                        {filter.element}
                     </button>
                 )
         })
     }
-    console.log(activeFilters)
-    const Buttons = filterButtons(filters);
+
+    const Buttons = activeFilters ? filterButtons(filters) : null;
+    const Loading =  filtersLoadingStatus === "loading" ?  <Spinner/> : null;
+    const ErrorMessage = filtersLoadingStatus === "error" ? <h5 className="text-center mt-5">Ошибка загрузки</h5> : null;
 
     return (
         <div className="card shadow-lg mt-4">
@@ -61,6 +52,8 @@ const HeroesFilters = () => {
                 <p className="card-text">Отфильтруйте героев по элементам</p>
                 <div className="btn-group">
                     {Buttons}
+                    {Loading}
+                    {ErrorMessage}
                 </div>
             </div>
         </div>

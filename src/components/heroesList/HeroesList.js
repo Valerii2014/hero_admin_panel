@@ -1,9 +1,9 @@
-import { useEffect } from 'react';
-import { createSelector } from '@reduxjs/toolkit'
-import { useDispatch, useSelector } from 'react-redux';
-import { CSSTransition } from 'react-transition-group';
-import { heroesFetching, heroesFetched, heroesFetchingError, deleteHero } from '../../actions';
+import './heroesList.scss';
 
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { deleteHero, fetchHeroes, filteredHeroesSelector } from './heroesSlice';
 import {useHttp} from '../../hooks/http.hook';
 
 import HeroesListItem from "../heroesListItem/HeroesListItem";
@@ -11,44 +11,20 @@ import Spinner from '../spinner/Spinner';
 
 
 const HeroesList = () => {
-    
-    const filteredHeroesSelector = createSelector(
-        state => state.heroes.heroes,
-        state => state.filters.activeFilters,
-        (heroes, activeFilters) => {
-            return heroes.filter(({element}) => activeFilters.some(filter => filter === element))
-        }
-    )
-    
+
     const {request} = useHttp();
-    const dispatch = useDispatch();
-    const filteredHeroes = useSelector(filteredHeroesSelector)   
+    const dispatch = useDispatch();   
     const {heroesLoadingStatus} = useSelector(state => state.heroes);
+    const filteredHeroes = useSelector(filteredHeroesSelector) 
 
     useEffect(() => {
-        dispatch(heroesFetching());
-        request("http://localhost:3001/heroes")
-            .then(data => dispatch(heroesFetched(data)))
-            .catch(() => dispatch(heroesFetchingError()))
+        dispatch(fetchHeroes(request))
     }, []);
-    
         
     const onDeleteHero = (id) => {
         request(`http://localhost:3001/heroes/${id}`, 'DELETE')
             .then(dispatch(deleteHero(id)))
             .catch(err => console.log(err))
-    }
-
-
-    const renderHeroesList = (arr) => {
-
-        if (arr.length === 0) {
-            return <h5 className="text-center mt-5">Героев пока нет</h5>
-        }
-        
-        return arr.map(({id, ...props}) => {
-                return <HeroesListItem key={id} {...props} deleteHero={() => onDeleteHero(id)}/>
-            })
     }
 
     if (heroesLoadingStatus === "loading") {
@@ -57,11 +33,32 @@ const HeroesList = () => {
         return <h5 className="text-center mt-5">Ошибка загрузки</h5>
     }
     
+
+    const renderHeroesList = (arr) => {
+        return arr.map(({id, ...props}) => {
+                return (
+                    <CSSTransition
+                        key={id} 
+                        timeout={500}
+                        classNames='list-item'>
+                        <HeroesListItem 
+                            {...props} 
+                            deleteHero={() => onDeleteHero(id)}/>
+                    </CSSTransition>
+                )
+            })
+    }
+    const noHeroes = filteredHeroes.length === 0 ? 
+    <li className="text-center mt-5">Героев пока нет</li> : 
+    null;
     const elements = renderHeroesList(filteredHeroes);
     return (
         <ul>
-            {elements}
-        </ul>
+            {noHeroes}
+            <TransitionGroup component={null}>
+                {elements}
+            </TransitionGroup> 
+        </ul>      
     )
 }
 
