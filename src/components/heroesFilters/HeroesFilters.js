@@ -25,7 +25,7 @@ const HeroesFilters = () => {
             const btnClass = checkActive ? '-outline' : '';
             const action = () => dispatch(changeActiveFilter(checkActive ? 
                                                                 filter : 
-                                                                    filter.id))
+                                                                filter.id))
 
             return ( 
                     <button 

@@ -3,6 +3,7 @@ import './heroesList.scss';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
+
 import { deleteHero, fetchHeroes, filteredHeroesSelector } from './heroesSlice';
 import {useHttp} from '../../hooks/http.hook';
 
@@ -49,8 +50,8 @@ const HeroesList = () => {
             })
     }
     const noHeroes = filteredHeroes.length === 0 ? 
-    <li className="text-center mt-5">Героев пока нет</li> : 
-    null;
+            <li className="text-center mt-5">Героев пока нет</li> : 
+            null;
     const elements = renderHeroesList(filteredHeroes);
     return (
         <ul>

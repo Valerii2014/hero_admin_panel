@@ -55,9 +55,6 @@ export const filteredHeroesSelector = createSelector(
     }
 )
 
-// export const selectAllHeroes = state => heroesAdapter.getSelectors().selectAll(state.heroes);
-// Перевірити код із конспекту !!
-
 export default reducer;
 export const {heroesFetching,
               heroesFetched,
